@@ -1,0 +1,42 @@
+HOW TO USE PROGRAM:
+1) Download FB Messenger data
+- Go to "Settings" on FB
+- Go to "Your Facebook Information"
+- Go to "Download Your Information"
+- Select "Messages" under "Your Information" as the data you want to downlaod
+- Ensure that "HTML" is selected beside "Format:"
+- Click "Create File"
+- Once the file has been created, click "Download"
+
+2) Copy the the conversation you want to analyze into a text document
+- Unzip the downloaded file
+- Select the web link "index"
+- Select "Your Messages"
+- Select the desired conversation
+- Copy the entire of the conversation (beginning with the name of the person who sent the most recent message, and ending with the date/time stamp of the first message in the conversation) into a new text file
+ * Note - To select the entire conversation, highlight the first line, scroll to the bottom, then while holding shift click at the end of the last line
+ * Note - The text file must be locate in the same folder as the program files
+ * Note - The text file must not begin or end with an empty line (i.e. the logic of the program assumes that the first line will be a name and the last line will be a date/time stamp)
+
+3) Run the program
+- Open the program
+- Run the "Main" class
+- Enter the name of the file you just created, including the ".txt" at the end
+- Enter the number of the operation you want to perform
+- If prompted, enter either 0, 1 or 2 indicating the class of interactions you want to include in your search
+ * 0 corresponds to text messages. Text messages include only typed messages and emojis
+ * 1 correspnds to messages. Messages include text messgaes as well as pictures, videos, GIFs, stickers, voice messages and attachments.
+ * 2 corresponds to interactions. Interactions include all text messages as well as game notifications, poll and plan responses, nickname changes, adding or removing members, video chats or calls, and changing chat settings. Interactions include everything except event reminders which FB automatically sends in chats.
+- Depending on the operation, you may be asked for other search criteria as well
+- Enjoy the cool stats!
+
+SOME NOTES ABOUT THE PROGRAM
+This program isn't built to be robust. Here are some cases in which it will break/fail/be innacurate
+- If you enter an invalid input when selecting an operation or search criteria, it may crash
+- The logic of the program is anchored by the date/time stamps. That is, a date/time stamp tells the program it has reached the end of a certain interaction. In some cases, if the conversation contains a date/time stamp formatted the exact same as in the Messenger data export, the program may break. Fail-safes have been implemented. I won't go into detail, but essentially the only case which would cause this is if someone typed in the second,third,etc. line of a text message a date formatted the exact same as Messenger with nothing precinging or following it. As far as I know, the program won't crash because of this. All that will happen is that the next message will be have a nonsesnse user attributed to it. So a good way to check for this is to run "Messages by User" and see if the program outputs a nonsense user name at any point.
+- The program has to decide which lines correspond to different types of interactions by the contents of the line. For example, if a line contains " sent a GIF from " and ends in a period, the program classifies that interaction as a GIF. So if someone happened to type a text message that met these criteria, the program would classify it only as a message, not a text message. Thus, rarely but some times the program will mistakenly classify a text message as only being a message. This is especially true for game notifications. There are hundreds of games on Messenger, each of which produce a unique game notification. There are some commonalities (e.g. many end in " in a game.") however it is diffucult for the program to decide which lines correspond to game notifiations and which do not in every case. Thus, it is possible that some text messages will be misclassified as game notifications and vice versa.
+
+A VERY BRIEF DESCRIPTION ABOUT HOW THE PROGRAM WORKS
+1) The program reads through the lines in the text file, decing what the line corresponds to (e.g. date/time stamp, game interaction, sticker etc.). For each line it creates a line object which contains the contents of the line as well as the type it has classified it as. These lines are collected in an ArrayList.
+2) The program reads through this ArrayList of line messages deciding which lines belong together to make an interaction. It creates Interaction objects which contain the contents and properties of each interaction, then collects them in an ArrayList within the InteractionList class.
+3) The InteractionList contains the functions for each of the stats. So after the program has created an InteractionList object of the conversation, it calls these methods to output the results of different operations. 
